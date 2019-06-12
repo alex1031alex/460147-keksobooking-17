@@ -1,3 +1,5 @@
+'use strict';
+
 document.querySelector('.map').classList.remove('map--faded');
 
 var MIN_X = 0;
@@ -8,7 +10,7 @@ var PIN_WIDTH = 65;
 var PIN_HEIGHT = 87;
 var homeTypes = ['palace', 'flat', 'house', 'bungalo'];
 var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-var mapPinList = document.querySelector('.map__pins')
+var mapPinList = document.querySelector('.map__pins');
 
 var getRandomNumber = function (min, max) {
   var number = Math.floor(min + Math.random() * (max + 1 - min));
@@ -34,7 +36,7 @@ var similarNotices = getRandomNotices(8);
 var createNoticeElement = function (notice) {
   var noticeElement = mapPinTemplate.cloneNode(true);
 
-  noticeElement.style.left = (notice.location.x - PIN_WIDTH/2) + 'px';
+  noticeElement.style.left = (notice.location.x - PIN_WIDTH / 2) + 'px';
   noticeElement.style.top = (notice.location.y - PIN_HEIGHT) + 'px';
   noticeElement.querySelector('img').src = notice.author.avatar;
   noticeElement.alt = 'объявление';
