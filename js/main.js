@@ -37,7 +37,7 @@ var createNoticeElement = function (notice) {
   noticeElement.style.left = (notice.location.x - PIN_WIDTH / 2) + 'px';
   noticeElement.style.top = (notice.location.y - PIN_HEIGHT) + 'px';
   noticeElement.querySelector('img').src = notice.author.avatar;
-  noticeElement.alt = 'объявление';
+  noticeElement.querySelector('img').alt = 'объявление';
 
   return noticeElement;
 };
