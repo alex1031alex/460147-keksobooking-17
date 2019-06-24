@@ -51,5 +51,3 @@ var fillNoticeList = function (list, notices) {
 
   list.appendChild(fragment);
 };
-
-fillNoticeList(mapPinList, similarNotices);
