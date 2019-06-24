@@ -90,7 +90,7 @@ mapPin.addEventListener('click', function () {
   adForm.classList.remove('ad-form--disabled');
   switchFormControls(adForm, false);
   switchFormControls(filterForm, false);
-  addressInput.value = Math.round((parseInt(mapPin.style.left) + MAIN_PIN_WIDTH / 2))
-  + ', ' + Math.round((parseInt(mapPin.style.top) + MAIN_PIN_HEIGHT / 2));
+  addressInput.value = Math.round((parseInt(mapPin.style.left, 10) + MAIN_PIN_WIDTH / 2))
+  + ', ' + Math.round((parseInt(mapPin.style.top, 10) + MAIN_PIN_HEIGHT / 2));
   fillNoticeList(mapPinList, similarNotices);
 });
