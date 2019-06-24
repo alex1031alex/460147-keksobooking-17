@@ -1,7 +1,5 @@
 'use strict';
 
-document.querySelector('.map').classList.remove('map--faded');
-
 var MIN_X = 0;
 var MAX_X = 1200;
 var MIN_Y = 130;
