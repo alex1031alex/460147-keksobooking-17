@@ -82,7 +82,6 @@ var switchFormControls = function (form, isDisabled) {
   if (submit) {
     submit.disabled = isDisabled;
   }
-
 };
 
 switchFormControls(adForm, true);
