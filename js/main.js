@@ -66,7 +66,9 @@ var switchFormControls = function (form, isDisabled) {
   var submit = form.querySelector('[type="submit"]');
 
   for (var i = 0; i < inputs.length; i++) {
-    inputs[i].disabled = isDisabled;
+    if (inputs[i] !== addressInput) {
+      inputs[i].disabled = isDisabled;
+    }
   }
 
   for (i = 0; i < selects.length; i++) {
@@ -80,6 +82,7 @@ var switchFormControls = function (form, isDisabled) {
   if (submit) {
     submit.disabled = isDisabled;
   }
+
 };
 
 switchFormControls(adForm, true);
