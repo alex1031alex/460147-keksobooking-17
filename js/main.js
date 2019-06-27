@@ -101,6 +101,8 @@ mapPin.addEventListener('click', function () {
 // Валидация формы
 var homeTypeField = adForm.querySelector('#type');
 var priceInput = adForm.querySelector('#price');
+var timeinInput = adForm.querySelector('#timein');
+var timeoutInput = adForm.querySelector('#timeout');
 
 var setMinPrice = function (minPrice) {
   priceInput.min = String(minPrice);
@@ -121,4 +123,12 @@ homeTypeField.addEventListener('input', function () {
     case 'palace':
       setMinPrice(10000);
   }
+});
+
+timeinInput.addEventListener('input', function () {
+  timeoutInput.value = timeinInput.value;
+});
+
+timeoutInput.addEventListener('input', function () {
+  timeinInput.value = timeoutInput.value;
 });
