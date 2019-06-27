@@ -109,7 +109,7 @@ var setMinPrice = function (minPrice) {
 };
 
 homeTypeField.addEventListener('input', function () {
-  switch(homeTypeField.value) {
+  switch (homeTypeField.value) {
     case 'bungalo':
       setMinPrice(0);
       break;
