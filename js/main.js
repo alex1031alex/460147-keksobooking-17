@@ -94,3 +94,28 @@ mapPin.addEventListener('click', function () {
   + ', ' + Math.round((parseInt(mapPin.style.top, 10) + MAIN_PIN_HEIGHT / 2));
   fillNoticeList(mapPinList, similarNotices);
 });
+
+// Валидация формы
+var homeTypeField = adForm.querySelector('#type');
+var priceInput = adForm.querySelector('#price');
+
+var setMinPrice = function (minPrice) {
+  priceInput.min = String(minPrice);
+  priceInput.placeholder = String(minPrice);
+};
+
+homeTypeField.addEventListener('input', function () {
+  switch(homeTypeField.value) {
+    case 'bungalo':
+      setMinPrice(0);
+      break;
+    case 'flat':
+      setMinPrice(1000);
+      break;
+    case 'house':
+      setMinPrice(5000);
+      break;
+    case 'palace':
+      setMinPrice(10000);
+  }
+});
