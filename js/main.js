@@ -66,7 +66,9 @@ var switchFormControls = function (form, isDisabled) {
   var submit = form.querySelector('[type="submit"]');
 
   for (var i = 0; i < inputs.length; i++) {
-    inputs[i].disabled = isDisabled;
+    if (inputs[i] !== addressInput) {
+      inputs[i].disabled = isDisabled;
+    }
   }
 
   for (i = 0; i < selects.length; i++) {
@@ -93,4 +95,39 @@ mapPin.addEventListener('click', function () {
   addressInput.value = Math.round((parseInt(mapPin.style.left, 10) + MAIN_PIN_WIDTH / 2))
   + ', ' + Math.round((parseInt(mapPin.style.top, 10) + MAIN_PIN_HEIGHT / 2));
   fillNoticeList(mapPinList, similarNotices);
+});
+
+// Валидация формы
+var homeTypeField = adForm.querySelector('#type');
+var priceInput = adForm.querySelector('#price');
+var timeinInput = adForm.querySelector('#timein');
+var timeoutInput = adForm.querySelector('#timeout');
+
+var setMinPrice = function (minPrice) {
+  priceInput.min = String(minPrice);
+  priceInput.placeholder = String(minPrice);
+};
+
+homeTypeField.addEventListener('input', function () {
+  switch (homeTypeField.value) {
+    case 'bungalo':
+      setMinPrice(0);
+      break;
+    case 'flat':
+      setMinPrice(1000);
+      break;
+    case 'house':
+      setMinPrice(5000);
+      break;
+    case 'palace':
+      setMinPrice(10000);
+  }
+});
+
+timeinInput.addEventListener('input', function () {
+  timeoutInput.value = timeinInput.value;
+});
+
+timeoutInput.addEventListener('input', function () {
+  timeinInput.value = timeoutInput.value;
 });
