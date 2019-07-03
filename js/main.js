@@ -7,7 +7,7 @@ var MAX_Y = 630;
 var PIN_WIDTH = 50;
 var PIN_HEIGHT = 70;
 var MAIN_PIN_WIDTH = 65;
-var MAIN_PIN_HEIGHT = 65;
+var MAIN_PIN_HEIGHT = 87;
 var homeTypes = ['palace', 'flat', 'house', 'bungalo'];
 var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var mapPinList = document.querySelector('.map__pins');
@@ -87,16 +87,6 @@ var switchFormControls = function (form, isDisabled) {
 switchFormControls(adForm, true);
 switchFormControls(filterForm, true);
 
-mapPin.addEventListener('click', function () {
-  map.classList.remove('map--faded');
-  adForm.classList.remove('ad-form--disabled');
-  switchFormControls(adForm, false);
-  switchFormControls(filterForm, false);
-  addressInput.value = Math.round((parseInt(mapPin.style.left, 10) + MAIN_PIN_WIDTH / 2))
-  + ', ' + Math.round((parseInt(mapPin.style.top, 10) + MAIN_PIN_HEIGHT / 2));
-  fillNoticeList(mapPinList, similarNotices);
-});
-
 // Валидация формы
 var homeTypeField = adForm.querySelector('#type');
 var priceInput = adForm.querySelector('#price');
@@ -130,4 +120,78 @@ timeinInput.addEventListener('input', function () {
 
 timeoutInput.addEventListener('input', function () {
   timeinInput.value = timeoutInput.value;
+});
+
+// Перетаскивание метки
+var activatePage = function () {
+  switchFormControls(adForm, false);
+  switchFormControls(filterForm, false);
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+};
+
+var isPageActive =  false;
+
+addressInput.value = Math.round((parseInt(mapPin.style.left, 10) + MAIN_PIN_WIDTH / 2))
++ ', ' + Math.round((parseInt(mapPin.style.top, 10) + MAIN_PIN_HEIGHT / 2));
+
+mapPin.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
+
+  var startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  var mouseMoveHandler = function (moveEvt) {
+    moveEvt.preventDefault();
+
+    var shift = {
+      x: startCoords.x - moveEvt.clientX,
+      y: startCoords.y - moveEvt.clientY
+    };
+
+    startCoords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    mapPin.style.top = (mapPin.offsetTop - shift.y) + 'px';
+    mapPin.style.left = (mapPin.offsetLeft - shift.x) + 'px';
+
+    addressInput.value = Math.round((parseInt(mapPin.style.left, 10) + MAIN_PIN_WIDTH / 2))
+    + ', ' + Math.round((parseInt(mapPin.style.top, 10) + MAIN_PIN_HEIGHT));
+  };
+
+  var mouseUpHandler = function (upEvt) {
+    upEvt.preventDefault();
+
+    if (!isPageActive) {
+      activatePage();
+      isPageActive = true;
+    }
+
+    if (parseInt(mapPin.style.top) > (MAX_Y - MAIN_PIN_HEIGHT)) {
+      mapPin.style.top = (MAX_Y - MAIN_PIN_HEIGHT) + 'px';
+    } else if (parseInt(mapPin.style.top) < (MIN_Y - MAIN_PIN_HEIGHT)) {
+      mapPin.style.top = (MIN_Y - MAIN_PIN_HEIGHT) + 'px';
+    }
+
+    if (parseInt(mapPin.style.left) > (MAX_X - MAIN_PIN_WIDTH / 2)) {
+      mapPin.style.left = (MAX_X - MAIN_PIN_WIDTH / 2) + 'px';
+    } else if (parseInt(mapPin.style.left) < (MIN_X - MAIN_PIN_WIDTH / 2)) {
+      mapPin.style.left = (MIN_X - MAIN_PIN_WIDTH / 2) + 'px';
+    }
+
+    addressInput.value = Math.round((parseInt(mapPin.style.left, 10) + MAIN_PIN_WIDTH / 2))
+    + ', ' + Math.round((parseInt(mapPin.style.top, 10) + MAIN_PIN_HEIGHT));
+
+    fillNoticeList(mapPinList, similarNotices);
+
+    document.removeEventListener('mousemove', mouseMoveHandler);
+    document.removeEventListener('mouseup', mouseUpHandler);
+  };
+
+  document.addEventListener('mousemove', mouseMoveHandler);
+  document.addEventListener('mouseup', mouseUpHandler);
 });
