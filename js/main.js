@@ -130,7 +130,7 @@ var activatePage = function () {
   adForm.classList.remove('ad-form--disabled');
 };
 
-var isPageActive =  false;
+var isPageActive = false;
 
 addressInput.value = Math.round((parseInt(mapPin.style.left, 10) + MAIN_PIN_WIDTH / 2))
 + ', ' + Math.round((parseInt(mapPin.style.top, 10) + MAIN_PIN_HEIGHT / 2));
@@ -171,15 +171,15 @@ mapPin.addEventListener('mousedown', function (evt) {
       isPageActive = true;
     }
 
-    if (parseInt(mapPin.style.top) > (MAX_Y - MAIN_PIN_HEIGHT)) {
+    if (parseInt(mapPin.style.top, 10) > (MAX_Y - MAIN_PIN_HEIGHT)) {
       mapPin.style.top = (MAX_Y - MAIN_PIN_HEIGHT) + 'px';
-    } else if (parseInt(mapPin.style.top) < (MIN_Y - MAIN_PIN_HEIGHT)) {
+    } else if (parseInt(mapPin.style.top, 10) < (MIN_Y - MAIN_PIN_HEIGHT)) {
       mapPin.style.top = (MIN_Y - MAIN_PIN_HEIGHT) + 'px';
     }
 
-    if (parseInt(mapPin.style.left) > (MAX_X - MAIN_PIN_WIDTH / 2)) {
+    if (parseInt(mapPin.style.left, 10) > (MAX_X - MAIN_PIN_WIDTH / 2)) {
       mapPin.style.left = (MAX_X - MAIN_PIN_WIDTH / 2) + 'px';
-    } else if (parseInt(mapPin.style.left) < (MIN_X - MAIN_PIN_WIDTH / 2)) {
+    } else if (parseInt(mapPin.style.left, 10) < (MIN_X - MAIN_PIN_WIDTH / 2)) {
       mapPin.style.left = (MIN_X - MAIN_PIN_WIDTH / 2) + 'px';
     }
 
