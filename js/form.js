@@ -71,5 +71,5 @@
     filterForm: filterForm,
     addressInput: addressInput,
     switchFormControls: switchFormControls
-  }
+  };
 })();

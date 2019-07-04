@@ -33,5 +33,5 @@
     MAX_Y: MAX_Y,
     getRandomNumber: getRandomNumber,
     getRandomNotices: getRandomNotices
-  }
+  };
 })();
