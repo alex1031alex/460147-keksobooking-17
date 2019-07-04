@@ -6,6 +6,7 @@
   var MIN_Y = 130;
   var MAX_Y = 630;
   var homeTypes = ['palace', 'flat', 'house', 'bungalo'];
+
   var getRandomNumber = function (min, max) {
     var number = Math.floor(min + Math.random() * (max + 1 - min));
     return number;
