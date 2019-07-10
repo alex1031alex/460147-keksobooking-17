@@ -18,6 +18,14 @@
   window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + MAIN_PIN_WIDTH / 2))
   + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + MAIN_PIN_HEIGHT / 2));
 
+  var onLoad = function (notices) {
+    window.card.fillNoticeList(mapPinList, notices);
+  };
+
+  var onError = function () {
+
+  };
+
   mainMapPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
@@ -69,8 +77,9 @@
       window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + MAIN_PIN_WIDTH / 2))
       + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + MAIN_PIN_HEIGHT));
 
-      var similarNotices = window.data.getRandomNotices(8);
-      window.card.fillNoticeList(mapPinList, similarNotices);
+      window.load(onLoad, onError);
+      // var similarNotices = window.data.getRandomNotices(8);
+      // window.card.fillNoticeList(mapPinList, similarNotices)
 
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
