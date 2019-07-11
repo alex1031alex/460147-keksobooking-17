@@ -43,7 +43,7 @@
       }
     };
 
-    document.addEventListener('keydown', closeErrorModal)
+    document.addEventListener('keydown', closeErrorModal);
   };
 
   mainMapPin.addEventListener('mousedown', function (evt) {
