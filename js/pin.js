@@ -3,10 +3,12 @@
 (function () {
   var MAIN_PIN_WIDTH = 65;
   var MAIN_PIN_HEIGHT = 87;
+  var ESC_KEY_CODE = 27;
   var map = document.querySelector('.map');
   var mainMapPin = document.querySelector('.map__pin--main');
   var mapPinList = document.querySelector('.map__pins');
   var isPageActive = false;
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
   var activatePage = function () {
     window.form.switchFormControls(window.form.adForm, false);
@@ -17,6 +19,32 @@
 
   window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + MAIN_PIN_WIDTH / 2))
   + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + MAIN_PIN_HEIGHT / 2));
+
+  var onLoad = function (notices) {
+    window.card.fillNoticeList(mapPinList, notices);
+    if (document.querySelector('main .error')) {
+      document.querySelector('main .error').remove();
+    }
+  };
+
+  var onError = function (message) {
+    var errorModal = errorTemplate.cloneNode(true);
+
+    errorModal.querySelector('.error__message').textContent = message;
+    errorModal.querySelector('.error__button').addEventListener('click', function () {
+      window.load(onLoad, onError);
+    });
+    document.querySelector('main').appendChild(errorModal);
+
+    var closeErrorModal = function (evt) {
+      if (evt.keyCode === ESC_KEY_CODE) {
+        errorModal.remove();
+        document.removeEventListener('keydown', closeErrorModal);
+      }
+    };
+
+    document.addEventListener('keydown', closeErrorModal);
+  };
 
   mainMapPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -69,8 +97,9 @@
       window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + MAIN_PIN_WIDTH / 2))
       + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + MAIN_PIN_HEIGHT));
 
-      var similarNotices = window.data.getRandomNotices(8);
-      window.card.fillNoticeList(mapPinList, similarNotices);
+      window.load(onLoad, onError);
+      // var similarNotices = window.data.getRandomNotices(8);
+      // window.card.fillNoticeList(mapPinList, similarNotices)
 
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
