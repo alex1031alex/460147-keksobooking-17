@@ -3,10 +3,12 @@
 (function () {
   var MAIN_PIN_WIDTH = 65;
   var MAIN_PIN_HEIGHT = 87;
+  var ESC_KEY_CODE = 27;
   var map = document.querySelector('.map');
   var mainMapPin = document.querySelector('.map__pin--main');
   var mapPinList = document.querySelector('.map__pins');
   var isPageActive = false;
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
   var activatePage = function () {
     window.form.switchFormControls(window.form.adForm, false);
@@ -20,10 +22,28 @@
 
   var onLoad = function (notices) {
     window.card.fillNoticeList(mapPinList, notices);
+    if (document.querySelector('main .error')) {
+      document.querySelector('main .error').remove();
+    }
   };
 
-  var onError = function () {
+  var onError = function (message) {
+    var errorModal = errorTemplate.cloneNode(true);
 
+    errorModal.querySelector('.error__message').textContent = message;
+    errorModal.querySelector('.error__button').addEventListener('click', function () {
+      window.load(onLoad, onError);
+    });
+    document.querySelector('main').appendChild(errorModal);
+
+    var closeErrorModal = function (evt) {
+      if (evt.keyCode === ESC_KEY_CODE) {
+        errorModal.remove();
+        document.removeEventListener('keydown', closeErrorModal);
+      }
+    };
+
+    document.addEventListener('keydown', closeErrorModal)
   };
 
   mainMapPin.addEventListener('mousedown', function (evt) {
