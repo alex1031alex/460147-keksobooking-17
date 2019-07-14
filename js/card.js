@@ -4,6 +4,7 @@
   var PIN_WIDTH = 50;
   var PIN_HEIGHT = 70;
   var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+  var noticeList = document.querySelector('.map__pins');
 
   var createNoticeElement = function (notice) {
     var noticeElement = mapPinTemplate.cloneNode(true);
@@ -16,17 +17,17 @@
     return noticeElement;
   };
 
-  var fillNoticeList = function (list, notices) {
+  var fillNoticeList = function (notices) {
     var fragment = document.createDocumentFragment();
 
-    for (var j = 0; j < notices.length; j++) {
-      fragment.appendChild(createNoticeElement(notices[j]));
+    for (var i = 0; i < notices.length; i++) {
+      fragment.appendChild(createNoticeElement(notices[i]));
     }
 
-    list.appendChild(fragment);
+    noticeList.appendChild(fragment);
   };
 
   window.card = {
-    fillNoticeList: fillNoticeList
+    fillNoticeList: fillNoticeList,
   };
 })();
