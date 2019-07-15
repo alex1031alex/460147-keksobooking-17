@@ -13,7 +13,7 @@
 
   var activatePage = function () {
     window.form.switchFormControls(window.form.adForm, false);
-    window.form.switchFormControls(window.form.filterForm, false);
+
     map.classList.remove('map--faded');
     window.form.adForm.classList.remove('ad-form--disabled');
   };
@@ -28,31 +28,29 @@
     });
   };
 
-  var filterByHousing = function (notices) {
-    return notices.filter(function (it) {
+  var filterNotices = function (notices) {
+    var filteredNotices = notices.filter(function (it) {
       if (housingTypeFilter.value === 'any') {
         return true;
       } else {
         return housingTypeFilter.value === it.offer.type;
-      }
+      };
     });
-  };
 
-  var filterByQuantity = function (notices) {
-    return notices.filter(function (it, i) {
+    filteredNotices = filteredNotices.filter(function (it, i) {
       return i < MAX_PIN_QUANTITY;
     });
+
+    return filteredNotices;
   };
 
   var onLoad = function (data) {
-    var filteredNotices = filterByQuantity(data);
-    window.card.fillNoticeList(filteredNotices);
+    window.form.switchFormControls(window.form.filterForm, false);
+    window.card.fillNoticeList(filterNotices(data));
 
     housingTypeFilter.addEventListener('change', function () {
       cleanMap();
-      filteredNotices = filterByHousing(data);
-      filteredNotices = filterByQuantity(filteredNotices);
-      window.card.fillNoticeList(filteredNotices);
+      window.card.fillNoticeList(filterNotices(data));
     });
 
     if (document.querySelector('main .error')) {
