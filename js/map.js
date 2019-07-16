@@ -38,7 +38,7 @@
         return true;
       } else {
         return housingTypeFilter.value === it.offer.type;
-      };
+      }
     });
 
     filteredNotices = filteredNotices.filter(function (it, i) {
