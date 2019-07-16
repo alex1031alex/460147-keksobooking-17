@@ -24,7 +24,7 @@
     card.querySelector('.popup__type').textContent = cardData.offer.type;
     card.querySelector('.popup__type').textContent = engToRus[cardData.offer.type];
     card.querySelector('.popup__text--capacity').textContent = cardData.offer.rooms +
-    ' комнаты для ' + cardData.offer.guests + ' гостей.'
+    ' комнаты для ' + cardData.offer.guests + ' гостей.';
     card.querySelector('.popup__text--time').textContent = 'Заезд после ' + cardData.offer.checkin +
     ', выезд до ' + cardData.offer.checkout + '.';
     cardData.offer.features.forEach(function (it) {
