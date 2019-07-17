@@ -20,8 +20,6 @@
           cardActive.remove();
         }
         window.card.renderCard(pinData[i]);
-        console.log(cardActive);
-        var popupClose;
       });
       fragment.appendChild(pin);
     });
