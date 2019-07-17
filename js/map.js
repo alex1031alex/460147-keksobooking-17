@@ -52,7 +52,6 @@
     window.form.switchFormControls(window.form.filterForm, false);
     var filteredNotices = filterNotices(data);
     window.pin.renderPin(filteredNotices);
-    window.card.renderCard(filteredNotices[0]);
 
     housingTypeFilter.addEventListener('change', function () {
       cleanMap();
