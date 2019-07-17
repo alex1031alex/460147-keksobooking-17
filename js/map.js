@@ -8,7 +8,6 @@
   var MAIN_PIN_WIDTH = 65;
   var MAIN_PIN_HEIGHT = 87;
   var MAX_PIN_QUANTITY = 5;
-  var ESC_KEY_CODE = 27;
   var map = document.querySelector('.map');
   var mainMapPin = document.querySelector('.map__pin--main');
   var isPageActive = false;
@@ -52,7 +51,6 @@
     window.form.switchFormControls(window.form.filterForm, false);
     var filteredNotices = filterNotices(data);
     window.pin.renderPin(filteredNotices);
-    window.card.renderCard(filteredNotices[0]);
 
     housingTypeFilter.addEventListener('change', function () {
       cleanMap();
@@ -74,7 +72,7 @@
     document.querySelector('main').appendChild(errorModal);
 
     var closeErrorModal = function (evt) {
-      if (evt.keyCode === ESC_KEY_CODE) {
+      if (evt.keyCode === window.card.ESC_KEY_CODE) {
         errorModal.remove();
         document.removeEventListener('keydown', closeErrorModal);
       }
