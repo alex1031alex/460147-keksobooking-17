@@ -69,16 +69,16 @@
   });
 
   var checkGuestNumber = function () {
-     if (Number(roomInput.value) === 100 && Number(guestInput.value) !== 0) {
-       guestInput.setCustomValidity('Если количество комнат равно 100 выберите вариант Не для гостей');
-     } else if (Number(roomInput.value) < Number(guestInput.value)) {
-       guestInput.setCustomValidity('Количество комнат не должно превышать количество гостей.' +
+    if (Number(roomInput.value) === 100 && Number(guestInput.value) !== 0) {
+      guestInput.setCustomValidity('Если количество комнат равно 100 выберите вариант Не для гостей');
+    } else if (Number(roomInput.value) < Number(guestInput.value)) {
+      guestInput.setCustomValidity('Количество комнат не должно превышать количество гостей.' +
         'Выберите другой вариант');
     } else if (Number(roomInput.value) < 100 && Number(guestInput.value) === 0) {
       guestInput.setCustomValidity('Если Вы хотите указать количество мест "Не для гостей",' +
-        ' выберите вариант 100 комнат в поле "Кол-во комнат". В противном случае укажите количество гостей.')
+        ' выберите вариант 100 комнат в поле "Кол-во комнат". В противном случае укажите количество гостей.');
     } else {
-     guestInput.setCustomValidity('');
+      guestInput.setCustomValidity('');
     }
   };
 
@@ -88,7 +88,7 @@
     checkGuestNumber();
   });
 
-  guestInput.addEventListener('input', function (evt) {
+  guestInput.addEventListener('input', function () {
     checkGuestNumber();
   });
 
