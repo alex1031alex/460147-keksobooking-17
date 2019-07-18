@@ -23,6 +23,7 @@
 
   window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + MAIN_PIN_WIDTH / 2))
   + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + MAIN_PIN_HEIGHT / 2));
+  window.form.addressInput.disabled = true;
 
   var cleanMap = function () {
     var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');

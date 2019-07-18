@@ -8,6 +8,8 @@
   var priceInput = adForm.querySelector('#price');
   var timeinInput = adForm.querySelector('#timein');
   var timeoutInput = adForm.querySelector('#timeout');
+  var roomInput = adForm.querySelector('#room_number');
+  var guestInput = adForm.querySelector('#capacity');
 
   var switchFormControls = function (form, isDisabled) {
     var inputs = form.querySelectorAll('input');
@@ -64,6 +66,34 @@
 
   timeoutInput.addEventListener('input', function () {
     timeinInput.value = timeoutInput.value;
+  });
+
+  var checkGuestNumber = function () {
+     if (Number(roomInput.value) === 100 && Number(guestInput.value) !== 0) {
+       guestInput.setCustomValidity('Если количество комнат равно 100 выберите вариант Не для гостей');
+     } else if (Number(roomInput.value) < Number(guestInput.value)) {
+       guestInput.setCustomValidity('Количество комнат не должно превышать количество гостей.' +
+        'Выберите другой вариант');
+    } else if (Number(roomInput.value) < 100 && Number(guestInput.value) === 0) {
+      guestInput.setCustomValidity('Если Вы хотите указать количество мест "Не для гостей",' +
+        ' выберите вариант 100 комнат в поле "Кол-во комнат". В противном случае укажите количество гостей.')
+    } else {
+     guestInput.setCustomValidity('');
+    }
+  };
+
+  checkGuestNumber();
+
+  roomInput.addEventListener('input', function () {
+    checkGuestNumber();
+  });
+
+  guestInput.addEventListener('input', function (evt) {
+    checkGuestNumber();
+  });
+
+  adForm.addEventListener('submit', function () {
+    window.form.addressInput.disabled = false;
   });
 
   window.form = {
