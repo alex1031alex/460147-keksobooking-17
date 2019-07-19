@@ -27,6 +27,8 @@
         default:
           onError('Ошибка ' + xhr.status + ': ' + xhr.statusText);
       }
+      console.log(typeof xhr.status);
+      console.log(xhr.status);
     });
 
     xhr.open('GET', URL);
