@@ -27,9 +27,17 @@
         default:
           onError('Ошибка ' + xhr.status + ': ' + xhr.statusText);
       }
-      console.log(typeof xhr.status);
-      console.log(xhr.status);
     });
+
+    xhr.addEventListener('error', function () {
+      onError('Произошла ошибка соединения');
+    });
+
+    xhr.addEventListener('timeout', function () {
+      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+    });
+
+    xhr.timeout = 10000;
 
     xhr.open('GET', URL);
     xhr.send();

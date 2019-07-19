@@ -7,11 +7,12 @@
   var MAX_Y = 630;
   var MAIN_PIN_WIDTH = 65;
   var MAIN_PIN_HEIGHT = 87;
+  var MAIN_PIN_TOP = 375;
+  var MAIN_PIN_LEFT = 570;
   var MAX_PIN_QUANTITY = 5;
   var map = document.querySelector('.map');
   var mainMapPin = document.querySelector('.map__pin--main');
   var isPageActive = false;
-  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
   var housingTypeFilter = document.querySelector('#housing-type');
 
   var activatePage = function () {
@@ -19,6 +20,15 @@
 
     map.classList.remove('map--faded');
     window.form.adForm.classList.remove('ad-form--disabled');
+  };
+
+  window.form.deactivatePage = function () {
+    cleanMap();
+    mainMapPin.style.left = MAIN_PIN_LEFT + 'px';
+    mainMapPin.style.top = MAIN_PIN_TOP + 'px';
+    map.classList.add('map--faded');
+    window.form.adForm.reset();
+    window.form.adForm.classList.add('ad-form--disabled');
   };
 
   window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + MAIN_PIN_WIDTH / 2))
@@ -61,25 +71,6 @@
     if (document.querySelector('main .error')) {
       document.querySelector('main .error').remove();
     }
-  };
-
-  var onError = function (message) {
-    var errorModal = errorTemplate.cloneNode(true);
-
-    errorModal.querySelector('.error__message').textContent = message;
-    errorModal.querySelector('.error__button').addEventListener('click', function () {
-      window.load(onLoad, onError);
-    });
-    document.querySelector('main').appendChild(errorModal);
-
-    var closeErrorModal = function (evt) {
-      if (evt.keyCode === window.card.ESC_KEY_CODE) {
-        errorModal.remove();
-        document.removeEventListener('keydown', closeErrorModal);
-      }
-    };
-
-    document.addEventListener('keydown', closeErrorModal);
   };
 
   mainMapPin.addEventListener('mousedown', function (evt) {
@@ -133,7 +124,7 @@
       window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + MAIN_PIN_WIDTH / 2))
       + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + MAIN_PIN_HEIGHT));
 
-      window.load(onLoad, onError);
+      window.load(onLoad, window.form.onError);
 
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);

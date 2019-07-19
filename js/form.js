@@ -10,6 +10,8 @@
   var timeoutInput = adForm.querySelector('#timeout');
   var roomInput = adForm.querySelector('#room_number');
   var guestInput = adForm.querySelector('#capacity');
+  var successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
   var switchFormControls = function (form, isDisabled) {
     var inputs = form.querySelectorAll('input');
@@ -92,14 +94,60 @@
     checkGuestNumber();
   });
 
-  adForm.addEventListener('submit', function () {
+  var deactivatePage = function () {};
+
+  var onSuccess = function () {
+    var successModal = successMessageTemplate.cloneNode(true);
+
+    document.querySelector('main').appendChild(successModal);
+    window.form.deactivatePage();
+
+    successModal.addEventListener('click', function () {
+      successModal.remove();
+    });
+
+    var closeModal = function (evt) {
+      if (evt.keyCode === window.card.ESC_KEY_CODE) {
+        successModal.remove();
+        document.removeEventListener('keydown', closeModal);
+      }
+    };
+
+    document.addEventListener('keydown', closeModal);
+  };
+
+  var onError = function (message) {
+    var errorModal = errorTemplate.cloneNode(true);
+
+    errorModal.querySelector('.error__message').textContent = message;
+    errorModal.querySelector('.error__button').addEventListener('click', function () {
+      window.load(onLoad, onError);
+    });
+    document.querySelector('main').appendChild(errorModal);
+
+    var closeErrorModal = function (evt) {
+      if (evt.keyCode === window.card.ESC_KEY_CODE) {
+        errorModal.remove();
+        document.removeEventListener('keydown', closeErrorModal);
+      }
+    };
+
+    document.addEventListener('keydown', closeErrorModal);
+  };
+
+  adForm.addEventListener('submit', function (evt) {
     window.form.addressInput.disabled = false;
+    window.save(new FormData(adForm), onSuccess, onError);
+    evt.preventDefault();
   });
 
   window.form = {
     adForm: adForm,
     filterForm: filterForm,
     addressInput: addressInput,
-    switchFormControls: switchFormControls
+    switchFormControls: switchFormControls,
+    onError: onError
   };
+
+  return window.form.deactivatePage;
 })();
