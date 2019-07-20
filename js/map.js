@@ -17,9 +17,15 @@
   var isPageActive = false;
   var housingTypeFilter = document.querySelector('#housing-type');
 
+  var cleanMap = function () {
+    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pins.forEach(function (it) {
+      it.remove();
+    });
+  };
+
   var activatePage = function () {
     window.form.switchFormControls(window.form.adForm, false);
-
     map.classList.remove('map--faded');
     window.form.adForm.classList.remove('ad-form--disabled');
   };
@@ -37,13 +43,6 @@
   + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT / 2));
   window.form.addressInput.disabled = true;
 
-  var cleanMap = function () {
-    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    pins.forEach(function (it) {
-      it.remove();
-    });
-  };
-
   var filterNotices = function (notices) {
     var filteredNotices = notices.filter(function (it) {
       if (housingTypeFilter.value === 'any') {
@@ -60,7 +59,7 @@
     return filteredNotices;
   };
 
-  var onLoad = function (data) {
+  var successLoadHandler = function (data) {
     window.form.switchFormControls(window.form.filterForm, false);
     var filteredNotices = filterNotices(data);
     window.pin.renderPin(filteredNotices);
@@ -69,28 +68,21 @@
       cleanMap();
       window.pin.renderPin(filterNotices(data));
     });
+  };
 
-    if (document.querySelector('main .error')) {
-      document.querySelector('main .error').remove();
-    }
+  var Coordinate = function (x, y) {
+    this.x = x;
+    this.y = y;
   };
 
   mainMapPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
 
-    var startCoords = {
-      x: evt.clientX,
-      y: evt.clientY
-    };
+    var startCoords = new Coordinate(evt.clientX, evt.clientY);
 
     var mouseMoveHandler = function (moveEvt) {
       moveEvt.preventDefault();
-
-      var shift = {
-        x: startCoords.x - moveEvt.clientX,
-        y: startCoords.y - moveEvt.clientY
-      };
-
+      var shift = new Coordinate(startCoords.x - moveEvt.clientX, startCoords.y - moveEvt.clientY);
       startCoords = {
         x: moveEvt.clientX,
         y: moveEvt.clientY
@@ -126,7 +118,7 @@
       window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
       + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT));
 
-      window.load(onLoad, window.util.errorHandler);
+      window.load(successLoadHandler, window.util.errorHandler);
 
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
