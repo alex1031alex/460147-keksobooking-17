@@ -23,15 +23,12 @@
         inputs[i].disabled = isDisabled;
       }
     }
-
     for (i = 0; i < selects.length; i++) {
       selects[i].disabled = isDisabled;
     }
-
     for (i = 0; i < textareas.length; i++) {
       textareas[i].disabled = isDisabled;
     }
-
     if (submit) {
       submit.disabled = isDisabled;
     }
@@ -88,7 +85,6 @@
   roomInput.addEventListener('input', function () {
     checkGuestNumber();
   });
-
   guestInput.addEventListener('input', function () {
     checkGuestNumber();
   });
@@ -97,22 +93,12 @@
 
   var onSuccess = function () {
     var successModal = successMessageTemplate.cloneNode(true);
-
     document.querySelector('main').appendChild(successModal);
     window.form.deactivatePage();
-
     successModal.addEventListener('click', function () {
       successModal.remove();
     });
-
-    var closeModal = function (evt) {
-      if (evt.keyCode === window.util.ESC_KEY_CODE) {
-        successModal.remove();
-        document.removeEventListener('keydown', closeModal);
-      }
-    };
-
-    document.addEventListener('keydown', closeModal);
+    document.addEventListener('keydown', window.util.escPressHandlerMaker(successModal));
   };
 
   adForm.addEventListener('submit', function (evt) {
