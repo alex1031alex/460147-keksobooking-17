@@ -10,6 +10,7 @@
   var timeoutInput = adForm.querySelector('#timeout');
   var roomInput = adForm.querySelector('#room_number');
   var guestInput = adForm.querySelector('#capacity');
+  var successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
 
   var switchFormControls = function (form, isDisabled) {
     var inputs = form.querySelectorAll('input');
@@ -22,15 +23,12 @@
         inputs[i].disabled = isDisabled;
       }
     }
-
     for (i = 0; i < selects.length; i++) {
       selects[i].disabled = isDisabled;
     }
-
     for (i = 0; i < textareas.length; i++) {
       textareas[i].disabled = isDisabled;
     }
-
     if (submit) {
       submit.disabled = isDisabled;
     }
@@ -87,19 +85,35 @@
   roomInput.addEventListener('input', function () {
     checkGuestNumber();
   });
-
   guestInput.addEventListener('input', function () {
     checkGuestNumber();
   });
 
-  adForm.addEventListener('submit', function () {
+  var deactivatePage = function () {};
+
+  var successSaveHandler = function () {
+    var successModal = successMessageTemplate.cloneNode(true);
+    document.querySelector('main').appendChild(successModal);
+    window.form.deactivatePage();
+    successModal.addEventListener('click', function () {
+      successModal.remove();
+    });
+    document.addEventListener('keydown', window.util.escPressHandlerMaker(successModal));
+  };
+
+  adForm.addEventListener('submit', function (evt) {
     window.form.addressInput.disabled = false;
+    window.save(new FormData(adForm), successSaveHandler, window.util.errorHandler);
+    evt.preventDefault();
   });
 
   window.form = {
     adForm: adForm,
     filterForm: filterForm,
     addressInput: addressInput,
-    switchFormControls: switchFormControls
+    switchFormControls: switchFormControls,
+    deactivatePage: deactivatePage
   };
+
+  return window.form.deactivatePage;
 })();
