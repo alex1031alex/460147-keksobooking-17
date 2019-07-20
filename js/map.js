@@ -126,7 +126,7 @@
       window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
       + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT));
 
-      window.load(onLoad, window.form.onError);
+      window.load(onLoad, window.util.errorHandler);
 
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);

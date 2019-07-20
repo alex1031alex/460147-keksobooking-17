@@ -1,7 +1,6 @@
 'use strict';
 
 (function () {
-  var ESC_KEY_CODE = 27;
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
   var engToRus = {
     'flat': 'Квартира',
@@ -47,22 +46,15 @@
     filtersContainer.insertAdjacentElement('beforeBegin', card);
 
     var popupClose = card.querySelector('.popup__close');
-    var escPressHandler = function (evt) {
-      if (evt.keyCode === ESC_KEY_CODE) {
-        card.remove();
-      }
-      document.removeEventListener('keydown', escPressHandler);
-    };
 
     popupClose.addEventListener('click', function () {
       card.remove();
     });
 
-    document.addEventListener('keydown', escPressHandler);
+    document.addEventListener('keydown', window.util.escPressHandlerMaker(card));
   };
 
   window.card = {
-    ESC_KEY_CODE: 27,
     renderCard: renderCard
   };
 })();
