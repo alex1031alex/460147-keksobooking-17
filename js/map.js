@@ -5,7 +5,7 @@
   var MAX_X = 1200;
   var MIN_Y = 130;
   var MAX_Y = 630;
-  var MainPin = {
+  var mainPin = {
     WIDTH: 65,
     HEIGHT: 87,
     TOP: 375,
@@ -26,15 +26,15 @@
 
   window.form.deactivatePage = function () {
     cleanMap();
-    mainMapPin.style.left = MainPin.LEFT + 'px';
-    mainMapPin.style.top = MainPin.TOP + 'px';
+    mainMapPin.style.left = mainPin.LEFT + 'px';
+    mainMapPin.style.top = mainPin.TOP + 'px';
     map.classList.add('map--faded');
     window.form.adForm.reset();
     window.form.adForm.classList.add('ad-form--disabled');
   };
 
-  window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + MainPin.WIDTH / 2))
-  + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + MainPin.HEIGHT / 2));
+  window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
+  + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT / 2));
   window.form.addressInput.disabled = true;
 
   var cleanMap = function () {
@@ -99,8 +99,8 @@
       mainMapPin.style.top = (mainMapPin.offsetTop - shift.y) + 'px';
       mainMapPin.style.left = (mainMapPin.offsetLeft - shift.x) + 'px';
 
-      window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + MainPin.WIDTH / 2))
-      + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + MainPin.HEIGHT));
+      window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
+      + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT));
     };
 
     var mouseUpHandler = function (upEvt) {
@@ -111,20 +111,20 @@
         isPageActive = true;
       }
 
-      if (parseInt(mainMapPin.style.top, 10) > (MAX_Y - MainPin.HEIGHT)) {
-        mainMapPin.style.top = (MAX_Y - MainPin.HEIGHT) + 'px';
-      } else if (parseInt(mainMapPin.style.top, 10) < (MIN_Y - MainPin.HEIGHT)) {
-        mainMapPin.style.top = (MIN_Y - MainPin.HEIGHT) + 'px';
+      if (parseInt(mainMapPin.style.top, 10) > (MAX_Y - mainPin.HEIGHT)) {
+        mainMapPin.style.top = (MAX_Y - mainPin.HEIGHT) + 'px';
+      } else if (parseInt(mainMapPin.style.top, 10) < (MIN_Y - mainPin.HEIGHT)) {
+        mainMapPin.style.top = (MIN_Y - mainPin.HEIGHT) + 'px';
       }
 
-      if (parseInt(mainMapPin.style.left, 10) > (MAX_X - MainPin.WIDTH / 2)) {
-        mainMapPin.style.left = (MAX_X - MainPin.WIDTH / 2) + 'px';
-      } else if (parseInt(mainMapPin.style.left, 10) < (MIN_X - MainPin.WIDTH / 2)) {
-        mainMapPin.style.left = (MIN_X - MainPin.WIDTH / 2) + 'px';
+      if (parseInt(mainMapPin.style.left, 10) > (MAX_X - mainPin.WIDTH / 2)) {
+        mainMapPin.style.left = (MAX_X - mainPin.WIDTH / 2) + 'px';
+      } else if (parseInt(mainMapPin.style.left, 10) < (MIN_X - mainPin.WIDTH / 2)) {
+        mainMapPin.style.left = (MIN_X - mainPin.WIDTH / 2) + 'px';
       }
 
-      window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + MainPin.WIDTH / 2))
-      + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + MainPin.HEIGHT));
+      window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
+      + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT));
 
       window.load(onLoad, window.form.onError);
 

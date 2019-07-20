@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var Pin = {
+  var pinSize = {
     WIDTH: 50,
     HEIGHT: 70
   };
@@ -12,8 +12,8 @@
     var fragment = document.createDocumentFragment();
     pinData.forEach(function (it, i) {
       var pin = mapPinTemplate.cloneNode(true);
-      pin.style.left = (it.location.x - Pin.WIDTH / 2) + 'px';
-      pin.style.top = (it.location.y - Pin.HEIGHT) + 'px';
+      pin.style.left = (it.location.x - pinSize.WIDTH / 2) + 'px';
+      pin.style.top = (it.location.y - pinSize.HEIGHT) + 'px';
       pin.querySelector('img').src = it.author.avatar;
       pin.querySelector('img').alt = it.offer.description;
       pin.addEventListener('click', function () {
