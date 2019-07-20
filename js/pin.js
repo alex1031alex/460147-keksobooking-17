@@ -1,8 +1,10 @@
 'use strict';
 
 (function () {
-  var PIN_WIDTH = 50;
-  var PIN_HEIGHT = 70;
+  var Pin = {
+    WIDTH: 50,
+    HEIGHT: 70
+  };
   var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinList = document.querySelector('.map__pins');
 
@@ -10,8 +12,8 @@
     var fragment = document.createDocumentFragment();
     pinData.forEach(function (it, i) {
       var pin = mapPinTemplate.cloneNode(true);
-      pin.style.left = (it.location.x - PIN_WIDTH / 2) + 'px';
-      pin.style.top = (it.location.y - PIN_HEIGHT) + 'px';
+      pin.style.left = (it.location.x - Pin.WIDTH / 2) + 'px';
+      pin.style.top = (it.location.y - Pin.HEIGHT) + 'px';
       pin.querySelector('img').src = it.author.avatar;
       pin.querySelector('img').alt = it.offer.description;
       pin.addEventListener('click', function () {

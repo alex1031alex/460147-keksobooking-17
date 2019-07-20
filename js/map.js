@@ -5,8 +5,6 @@
   var MAX_X = 1200;
   var MIN_Y = 130;
   var MAX_Y = 630;
-  var MAIN_PIN_TOP = 375;
-  var MAIN_PIN_LEFT = 570;
   var MainPin = {
     WIDTH: 65,
     HEIGHT: 87,
