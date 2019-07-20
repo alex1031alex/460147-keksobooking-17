@@ -91,7 +91,7 @@
 
   var deactivatePage = function () {};
 
-  var onSuccess = function () {
+  var successSaveHandler = function () {
     var successModal = successMessageTemplate.cloneNode(true);
     document.querySelector('main').appendChild(successModal);
     window.form.deactivatePage();
@@ -103,7 +103,7 @@
 
   adForm.addEventListener('submit', function (evt) {
     window.form.addressInput.disabled = false;
-    window.save(new FormData(adForm), onSuccess, window.util.errorHandler);
+    window.save(new FormData(adForm), successSaveHandler, window.util.errorHandler);
     evt.preventDefault();
   });
 
