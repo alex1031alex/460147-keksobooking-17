@@ -1,9 +1,10 @@
 'use strict';
+
 (function () {
   var ESC_KEY_CODE = 27;
 
   var escPressHandlerMaker = function (element) {
-    var escPressHandler = function(evt) {
+    var escPressHandler = function (evt) {
       if (evt.keyCode === ESC_KEY_CODE) {
         element.remove();
         document.removeEventListener('keydown', escPressHandler);
@@ -27,5 +28,5 @@
   window.util = {
     escPressHandlerMaker: escPressHandlerMaker,
     errorHandler: errorHandler
-  }
+  };
 })();

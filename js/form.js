@@ -112,6 +112,7 @@
     filterForm: filterForm,
     addressInput: addressInput,
     switchFormControls: switchFormControls,
+    deactivatePage: deactivatePage
   };
 
   return window.form.deactivatePage;
