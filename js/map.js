@@ -28,6 +28,7 @@
     window.form.switchFormControls(window.form.adForm, false);
     map.classList.remove('map--faded');
     window.form.adForm.classList.remove('ad-form--disabled');
+    isPageActive = true;
   };
 
   window.form.deactivatePage = function () {
@@ -36,7 +37,9 @@
     mainMapPin.style.top = mainPin.TOP + 'px';
     map.classList.add('map--faded');
     window.form.adForm.reset();
+    window.form.filterForm.reset();
     window.form.adForm.classList.add('ad-form--disabled');
+    isPageActive = false;
   };
 
   window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
@@ -100,7 +103,6 @@
 
       if (!isPageActive) {
         activatePage();
-        isPageActive = true;
       }
 
       if (parseInt(mainMapPin.style.top, 10) > (MAX_Y - mainPin.HEIGHT)) {
