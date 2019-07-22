@@ -5,6 +5,7 @@
     WIDTH: 50,
     HEIGHT: 70
   };
+  var DEBOUNCE_INTERVAL = 500;
   var MAX_PIN_QUANTITY = 5;
   var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinList = document.querySelector('.map__pins');
@@ -27,8 +28,10 @@
 
     allFilters.forEach(function (it) {
       it.addEventListener('change', function () {
-        cleanMap();
-        renderPin(filterNotices(data));
+        window.setTimeout(function () {
+          cleanMap();
+          renderPin(filterNotices(data));
+        }, DEBOUNCE_INTERVAL);
       });
       it.addEventListener('keydown', function (evt) {
         if (evt.keyCode === window.util.ENTER_KEY_CODE) {
@@ -37,8 +40,10 @@
           } else {
             it.checked = true;
           }
-          cleanMap();
-          renderPin(filterNotices(data));
+          window.setTimeout(function () {
+            cleanMap();
+            renderPin(filterNotices(data));
+          }, DEBOUNCE_INTERVAL);
         }
       });
     });
