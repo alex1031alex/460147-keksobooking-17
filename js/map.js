@@ -95,4 +95,16 @@
     document.addEventListener('mousemove', mouseMoveHandler);
     document.addEventListener('mouseup', mouseUpHandler);
   });
+
+  mainMapPin.addEventListener('keydown', function (keyEvt) {
+    if (keyEvt.keyCode === window.util.ENTER_KEY_CODE) {
+      var startCoords = new Coordinate(keyEvt.clientX, keyEvt.clientY);
+      if (!isPageActive) {
+        activatePage();
+      }
+      window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
+      + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT));
+      window.load(window.pin.successLoadHandler, window.util.errorHandler);
+    }
+  });
 })();
