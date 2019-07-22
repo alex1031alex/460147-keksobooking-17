@@ -49,6 +49,10 @@
     pins.forEach(function (it) {
       it.remove();
     });
+    var activeCard = document.querySelector('.map .map__card');
+    if (activeCard) {
+      activeCard.remove();
+    }
   };
 
   var filterNotices = function (notices) {
