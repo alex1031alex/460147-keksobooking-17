@@ -2,6 +2,7 @@
 
 (function () {
   var ESC_KEY_CODE = 27;
+  var ENTER_KEY_CODE = 13;
 
   var escPressHandlerMaker = function (element) {
     var escPressHandler = function (evt) {
@@ -49,6 +50,7 @@
   };
 
   window.util = {
+    ENTER_KEY_CODE: ENTER_KEY_CODE,
     escPressHandlerMaker: escPressHandlerMaker,
     errorHandler: errorHandler,
     switchFormControls: switchFormControls

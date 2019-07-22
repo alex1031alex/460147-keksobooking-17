@@ -9,13 +9,14 @@
   var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var pinList = document.querySelector('.map__pins');
   var filterForm = document.querySelector('.map__filters');
+  var mapFilters = Array.from(filterForm.querySelectorAll('.map__filter'));
+  var checkboxes = Array.from(filterForm.querySelectorAll('.map__features .map__checkbox'));
+  var allFilters = mapFilters.concat(checkboxes);
   var housingTypeFilter = filterForm.querySelector('#housing-type');
   var priceFilter = filterForm.querySelector('#housing-price');
   var roomFilter = filterForm.querySelector('#housing-rooms');
   var guestFilter = filterForm.querySelector('#housing-guests');
-  var mapFilters = filterForm.querySelectorAll('.map__filter');
-  var wifiFilter = filterForm.querySelector('[value="wifi"]');
-  var checkboxes = Array.from(filterForm.querySelectorAll('.map__features .map__checkbox'));
+
 
   window.util.switchFormControls(filterForm, true);
 
@@ -24,51 +25,22 @@
     var filteredNotices = filterNotices(data);
     window.pin.renderPin(filteredNotices);
 
-    housingTypeFilter.addEventListener('change', function () {
-      cleanMap();
-      renderPin(filterNotices(data));
-    });
-    priceFilter.addEventListener('change', function () {
-      cleanMap();
-      renderPin(filterNotices(data));
-    });
-    roomFilter.addEventListener('change', function () {
-      cleanMap();
-      renderPin(filterNotices(data));
-    });
-    guestFilter.addEventListener('change', function () {
-      cleanMap();
-      renderPin(filterNotices(data));
-    });
-    // checkboxes[0].addEventListener('change', function () {
-    //   cleanMap();
-    //   renderPin(filterNotices(data));
-    // });
-    // checkboxes[1].addEventListener('change', function () {
-    //   cleanMap();
-    //   renderPin(filterNotices(data));
-    // });
-    // checkboxes[2].addEventListener('change', function () {
-    //   cleanMap();
-    //   renderPin(filterNotices(data));
-    // });
-    // checkboxes[3].addEventListener('change', function () {
-    //   cleanMap();
-    //   renderPin(filterNotices(data));
-    // });
-    // checkboxes[4].addEventListener('change', function () {
-    //   cleanMap();
-    //   renderPin(filterNotices(data));
-    // });
-    // checkboxes[5].addEventListener('change', function () {
-    //   cleanMap();
-    //   renderPin(filterNotices(data));
-    // });
-    checkboxes.forEach(function (it) {
+    allFilters.forEach(function (it) {
       it.addEventListener('change', function () {
         cleanMap();
         renderPin(filterNotices(data));
-      })
+      });
+      it.addEventListener('keydown', function (evt) {
+        if (evt.keyCode === window.util.ENTER_KEY_CODE) {
+          if (it.checked) {
+            it.checked = false;
+          } else {
+            it.checked = true;
+          }
+          cleanMap();
+          renderPin(filterNotices(data));
+        }
+      });
     });
   };
 
@@ -116,11 +88,6 @@
         return Number(guestFilter.value) === it.offer.guests;
       }
     };
-
-    // Фильтрация по количеству отрисованных пинов
-    var filterByPinQuantity = function (it, i) {
-      return i < MAX_PIN_QUANTITY;
-    };
     // Массив фильтров по дополнительным удобствам
     var featFilters = checkboxes.map(function (cbx) {
       return function (it) {
@@ -133,6 +100,10 @@
         }
       };
     });
+    // Фильтрация по количеству отрисованных пинов
+    var filterByPinQuantity = function (it, i) {
+      return i < MAX_PIN_QUANTITY;
+    };
 
     var filteredNotices =
     notices.filter(filterByHousing)
