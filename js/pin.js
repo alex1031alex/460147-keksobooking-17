@@ -10,6 +10,12 @@
   var pinList = document.querySelector('.map__pins');
   var filterForm = document.querySelector('.map__filters');
   var housingTypeFilter = filterForm.querySelector('#housing-type');
+  var priceFilter = filterForm.querySelector('#housing-price');
+  var roomFilter = filterForm.querySelector('#housing-rooms');
+  var guestFilter = filterForm.querySelector('#housing-guests');
+  var mapFilters = filterForm.querySelectorAll('.map__filter');
+  var wifiFilter = filterForm.querySelector('[value="wifi"]');
+  var checkboxes = Array.from(filterForm.querySelectorAll('.map__features .map__checkbox'));
 
   window.util.switchFormControls(filterForm, true);
 
@@ -20,7 +26,49 @@
 
     housingTypeFilter.addEventListener('change', function () {
       cleanMap();
-      window.pin.renderPin(filterNotices(data));
+      renderPin(filterNotices(data));
+    });
+    priceFilter.addEventListener('change', function () {
+      cleanMap();
+      renderPin(filterNotices(data));
+    });
+    roomFilter.addEventListener('change', function () {
+      cleanMap();
+      renderPin(filterNotices(data));
+    });
+    guestFilter.addEventListener('change', function () {
+      cleanMap();
+      renderPin(filterNotices(data));
+    });
+    // checkboxes[0].addEventListener('change', function () {
+    //   cleanMap();
+    //   renderPin(filterNotices(data));
+    // });
+    // checkboxes[1].addEventListener('change', function () {
+    //   cleanMap();
+    //   renderPin(filterNotices(data));
+    // });
+    // checkboxes[2].addEventListener('change', function () {
+    //   cleanMap();
+    //   renderPin(filterNotices(data));
+    // });
+    // checkboxes[3].addEventListener('change', function () {
+    //   cleanMap();
+    //   renderPin(filterNotices(data));
+    // });
+    // checkboxes[4].addEventListener('change', function () {
+    //   cleanMap();
+    //   renderPin(filterNotices(data));
+    // });
+    // checkboxes[5].addEventListener('change', function () {
+    //   cleanMap();
+    //   renderPin(filterNotices(data));
+    // });
+    checkboxes.forEach(function (it) {
+      it.addEventListener('change', function () {
+        cleanMap();
+        renderPin(filterNotices(data));
+      })
     });
   };
 
@@ -32,16 +80,71 @@
   };
 
   var filterNotices = function (notices) {
-    var filteredNotices = notices.filter(function (it) {
+    // Фильтрация по типу жилья
+    var filterByHousing = function (it) {
       if (housingTypeFilter.value === 'any') {
         return true;
       } else {
         return housingTypeFilter.value === it.offer.type;
       }
-    });
-    filteredNotices = filteredNotices.filter(function (it, i) {
+    };
+    // Фильтрация по цене
+    var filterByPrice = function (it) {
+      if (priceFilter.value === 'any') {
+        return true;
+      } else if (priceFilter.value === 'middle') {
+         return it.offer.price >= 10000 && it.offer.price < 50000;
+      } else if (priceFilter.value === 'low') {
+         return it.offer.price < 10000;
+      } else if (priceFilter.value === 'high'){
+        return it.offer.price >= 50000;
+      }
+    };
+    // Фильтрация по числу комнат
+    var filterByRoom = function (it) {
+      if (roomFilter.value === 'any') {
+        return true;
+      } else {
+        return Number(roomFilter.value) === it.offer.rooms;
+      }
+    };
+    // Фильтрация по числу гостей
+    var filterByGuest = function (it) {
+      if (guestFilter.value === 'any') {
+        return true;
+      } else {
+        return Number(guestFilter.value) === it.offer.guests;
+      }
+    };
+
+    // Фильтрация по количеству отрисованных пинов
+    var filterByPinQuantity = function (it, i) {
       return i < MAX_PIN_QUANTITY;
+    };
+    // Массив фильтров по дополнительным удобствам
+    var featFilters = checkboxes.map(function (cbx) {
+      return function (it) {
+        if (cbx.checked) {
+          return it.offer.features.some(function (feat) {
+            return feat === cbx.value;
+          });
+        } else {
+          return true;
+        }
+      };
     });
+
+    var filteredNotices =
+    notices.filter(filterByHousing)
+    .filter(filterByPrice)
+    .filter(filterByRoom)
+    .filter(filterByGuest);
+
+    for (var i = 0; i < featFilters.length; i++) {
+      filteredNotices = filteredNotices.filter(featFilters[i]);
+    }
+
+    filteredNotices = filteredNotices.filter(filterByPinQuantity);
     return filteredNotices;
   };
 
