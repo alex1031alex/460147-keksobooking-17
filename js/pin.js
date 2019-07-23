@@ -137,6 +137,10 @@
       pin.querySelector('img').src = it.author.avatar;
       pin.querySelector('img').alt = it.offer.description;
       pin.addEventListener('click', function () {
+        if (pinList.querySelector('.map__pin--active')) {
+          pinList.querySelector('.map__pin--active').classList.remove('map__pin--active');
+        }
+        pin.classList.add('map__pin--active');
         var cardActive = document.querySelector('.map .map__card');
         if (cardActive) {
           cardActive.remove();

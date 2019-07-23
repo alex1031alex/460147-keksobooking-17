@@ -15,6 +15,11 @@
   var mainMapPin = document.querySelector('.map__pin--main');
   var isPageActive = false;
 
+  var fillAddressInput = function () {
+    window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
+    + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT / 2));
+  };
+
   var activatePage = function () {
     window.util.switchFormControls(window.form.adForm, false);
     map.classList.remove('map--faded');
@@ -31,13 +36,10 @@
     window.util.switchFormControls(window.form.adForm, true);
     window.pin.filterForm.reset();
     window.util.switchFormControls(window.pin.filterForm, true);
+    fillAddressInput();
     window.form.adForm.classList.add('ad-form--disabled');
+    window.form.addressInput.disabled = true;
     isPageActive = false;
-  };
-
-  var fillAddressInput = function () {
-    window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
-    + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT / 2));
   };
 
   fillAddressInput();

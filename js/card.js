@@ -18,19 +18,63 @@
   var renderCard = function (cardData) {
     var card = cardTemplate.cloneNode(true);
 
-    card.querySelector('.popup__title').textContent = cardData.offer.title;
-    card.querySelector('.popup__text--address').textContent = cardData.offer.address;
-    card.querySelector('.popup__text--price').innerHTML = cardData.offer.price + '&#8381' + '/ночь';
-    card.querySelector('.popup__type').textContent = cardData.offer.type;
-    card.querySelector('.popup__type').textContent = engToRus[cardData.offer.type];
-    card.querySelector('.popup__text--capacity').textContent = cardData.offer.rooms +
-    ' комнаты для ' + cardData.offer.guests + ' гостей.';
-    card.querySelector('.popup__text--time').textContent = 'Заезд после ' + cardData.offer.checkin +
-    ', выезд до ' + cardData.offer.checkout + '.';
+    if (cardData.offer.title) {
+      card.querySelector('.popup__title').textContent = cardData.offer.title;
+    } else {
+      card.querySelector('.popup__title').remove();
+    }
+
+    if (cardData.offer.address) {
+      card.querySelector('.popup__text--address').textContent = cardData.offer.address;
+    } else {
+      card.querySelector('.popup__text--address').remove();
+    }
+
+    if (cardData.offer.price) {
+      card.querySelector('.popup__text--price').innerHTML = cardData.offer.price + '&#8381' + '/ночь';
+    } else {
+      card.querySelector('.popup__text--price').remove();
+    }
+
+    if (cardData.offer.type) {
+      card.querySelector('.popup__type').textContent = engToRus[cardData.offer.type];
+    } else {
+      card.querySelector('.popup__type').remove();
+    }
+
+    if (cardData.offer.rooms && cardData.offer.guests) {
+      card.querySelector('.popup__text--capacity').textContent = cardData.offer.rooms +
+      ' комнаты для ' + cardData.offer.guests + ' гостей.';
+    } else if (cardData.offer.rooms) {
+      card.querySelector('.popup__text--capacity').textContent = cardData.offer.rooms + 'комнаты';
+    } else {
+      card.querySelector('.popup__text--capacity').remove();
+    }
+
+    if (cardData.offer.checkin && cardData.offer.checkout) {
+      card.querySelector('.popup__text--time').textContent = 'Заезд после ' + cardData.offer.checkin +
+      ', выезд до ' + cardData.offer.checkout + '.';
+    } else {
+      card.querySelector('.popup__text--time').remove();
+    }
+
     cardData.offer.features.forEach(function (it) {
       card.querySelector('.popup__feature--' + it).textContent = engToRus[it];
     });
-    card.querySelector('.popup__description').textContent = cardData.offer.description;
+
+    var featureItems = Array.from(card.querySelectorAll('.popup__feature'));
+    featureItems.forEach(function (it) {
+      if (! it.textContent) {
+        it.remove();
+      }
+    });
+
+    if (cardData.offer.description) {
+      card.querySelector('.popup__description').textContent = cardData.offer.description;
+    } else {
+      card.querySelector('.popup__description').remove();
+    }
+
     cardData.offer.photos.forEach(function (it, i) {
       if (i === 0) {
         card.querySelector('.popup__photo').src = it;
