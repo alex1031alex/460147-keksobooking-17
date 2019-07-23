@@ -11,64 +11,39 @@
     TOP: 375,
     LEFT: 570
   };
-  var MAX_PIN_QUANTITY = 5;
   var map = document.querySelector('.map');
   var mainMapPin = document.querySelector('.map__pin--main');
   var isPageActive = false;
-  var housingTypeFilter = document.querySelector('#housing-type');
 
-  var cleanMap = function () {
-    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    pins.forEach(function (it) {
-      it.remove();
-    });
+  var fillAddressInput = function () {
+    window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
+    + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT / 2));
   };
 
   var activatePage = function () {
-    window.form.switchFormControls(window.form.adForm, false);
+    window.util.switchFormControls(window.form.adForm, false);
     map.classList.remove('map--faded');
     window.form.adForm.classList.remove('ad-form--disabled');
+    isPageActive = true;
   };
 
   window.form.deactivatePage = function () {
-    cleanMap();
+    window.pin.cleanMap();
     mainMapPin.style.left = mainPin.LEFT + 'px';
     mainMapPin.style.top = mainPin.TOP + 'px';
     map.classList.add('map--faded');
     window.form.adForm.reset();
+    window.util.switchFormControls(window.form.adForm, true);
+    window.pin.filterForm.reset();
+    window.util.switchFormControls(window.pin.filterForm, true);
+    fillAddressInput();
     window.form.adForm.classList.add('ad-form--disabled');
+    window.form.addressInput.disabled = true;
+    isPageActive = false;
   };
 
-  window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
-  + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT / 2));
+  fillAddressInput();
   window.form.addressInput.disabled = true;
-
-  var filterNotices = function (notices) {
-    var filteredNotices = notices.filter(function (it) {
-      if (housingTypeFilter.value === 'any') {
-        return true;
-      } else {
-        return housingTypeFilter.value === it.offer.type;
-      }
-    });
-
-    filteredNotices = filteredNotices.filter(function (it, i) {
-      return i < MAX_PIN_QUANTITY;
-    });
-
-    return filteredNotices;
-  };
-
-  var successLoadHandler = function (data) {
-    window.form.switchFormControls(window.form.filterForm, false);
-    var filteredNotices = filterNotices(data);
-    window.pin.renderPin(filteredNotices);
-
-    housingTypeFilter.addEventListener('change', function () {
-      cleanMap();
-      window.pin.renderPin(filterNotices(data));
-    });
-  };
 
   var Coordinate = function (x, y) {
     this.x = x;
@@ -91,8 +66,7 @@
       mainMapPin.style.top = (mainMapPin.offsetTop - shift.y) + 'px';
       mainMapPin.style.left = (mainMapPin.offsetLeft - shift.x) + 'px';
 
-      window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
-      + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT));
+      fillAddressInput();
     };
 
     var mouseUpHandler = function (upEvt) {
@@ -100,7 +74,6 @@
 
       if (!isPageActive) {
         activatePage();
-        isPageActive = true;
       }
 
       if (parseInt(mainMapPin.style.top, 10) > (MAX_Y - mainPin.HEIGHT)) {
@@ -115,10 +88,8 @@
         mainMapPin.style.left = (MIN_X - mainPin.WIDTH / 2) + 'px';
       }
 
-      window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
-      + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT));
-
-      window.load(successLoadHandler, window.util.errorHandler);
+      fillAddressInput();
+      window.load(window.pin.successLoadHandler, window.util.errorHandler);
 
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
@@ -126,5 +97,15 @@
 
     document.addEventListener('mousemove', mouseMoveHandler);
     document.addEventListener('mouseup', mouseUpHandler);
+  });
+
+  mainMapPin.addEventListener('keydown', function (keyEvt) {
+    if (keyEvt.keyCode === window.util.ENTER_KEY_CODE) {
+      if (!isPageActive) {
+        activatePage();
+      }
+      fillAddressInput();
+      window.load(window.pin.successLoadHandler, window.util.errorHandler);
+    }
   });
 })();
