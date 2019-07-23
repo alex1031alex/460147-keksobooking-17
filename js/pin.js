@@ -73,10 +73,10 @@
       if (priceFilter.value === 'any') {
         return true;
       } else if (priceFilter.value === 'middle') {
-         return it.offer.price >= 10000 && it.offer.price < 50000;
+        return it.offer.price >= 10000 && it.offer.price < 50000;
       } else if (priceFilter.value === 'low') {
-         return it.offer.price < 10000;
-      } else if (priceFilter.value === 'high'){
+        return it.offer.price < 10000;
+      } else {
         return it.offer.price >= 50000;
       }
     };
