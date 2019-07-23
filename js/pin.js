@@ -26,13 +26,15 @@
     var filteredNotices = filterNotices(data);
     window.pin.renderPin(filteredNotices);
 
+    var changePins = function () {
+      window.setTimeout(function () {
+        cleanMap();
+        renderPin(filterNotices(data));
+      }, DEBOUNCE_INTERVAL);
+    };
+
     allFilters.forEach(function (it) {
-      it.addEventListener('change', function () {
-        window.setTimeout(function () {
-          cleanMap();
-          renderPin(filterNotices(data));
-        }, DEBOUNCE_INTERVAL);
-      });
+      it.addEventListener('change', changePins);
       it.addEventListener('keydown', function (evt) {
         if (evt.keyCode === window.util.ENTER_KEY_CODE) {
           if (it.checked) {
@@ -40,10 +42,7 @@
           } else {
             it.checked = true;
           }
-          window.setTimeout(function () {
-            cleanMap();
-            renderPin(filterNotices(data));
-          }, DEBOUNCE_INTERVAL);
+          changePins();
         }
       });
     });

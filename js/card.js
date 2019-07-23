@@ -64,7 +64,7 @@
 
     var featureItems = Array.from(card.querySelectorAll('.popup__feature'));
     featureItems.forEach(function (it) {
-      if (! it.textContent) {
+      if (!it.textContent) {
         it.remove();
       }
     });

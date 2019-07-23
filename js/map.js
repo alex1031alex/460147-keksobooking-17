@@ -101,7 +101,6 @@
 
   mainMapPin.addEventListener('keydown', function (keyEvt) {
     if (keyEvt.keyCode === window.util.ENTER_KEY_CODE) {
-      var startCoords = new Coordinate(keyEvt.clientX, keyEvt.clientY);
       if (!isPageActive) {
         activatePage();
       }
