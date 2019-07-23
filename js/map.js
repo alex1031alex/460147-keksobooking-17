@@ -35,8 +35,12 @@
     isPageActive = false;
   };
 
-  window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
-  + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT / 2));
+  var fillAddressInput = function () {
+    window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
+    + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT / 2));
+  };
+
+  fillAddressInput();
   window.form.addressInput.disabled = true;
 
   var Coordinate = function (x, y) {
@@ -60,8 +64,7 @@
       mainMapPin.style.top = (mainMapPin.offsetTop - shift.y) + 'px';
       mainMapPin.style.left = (mainMapPin.offsetLeft - shift.x) + 'px';
 
-      window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
-      + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT));
+      fillAddressInput();
     };
 
     var mouseUpHandler = function (upEvt) {
@@ -83,9 +86,7 @@
         mainMapPin.style.left = (MIN_X - mainPin.WIDTH / 2) + 'px';
       }
 
-      window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
-      + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT));
-
+      fillAddressInput();
       window.load(window.pin.successLoadHandler, window.util.errorHandler);
 
       document.removeEventListener('mousemove', mouseMoveHandler);
@@ -102,8 +103,7 @@
       if (!isPageActive) {
         activatePage();
       }
-      window.form.addressInput.value = Math.round((parseInt(mainMapPin.style.left, 10) + mainPin.WIDTH / 2))
-      + ', ' + Math.round((parseInt(mainMapPin.style.top, 10) + mainPin.HEIGHT));
+      fillAddressInput();
       window.load(window.pin.successLoadHandler, window.util.errorHandler);
     }
   });
