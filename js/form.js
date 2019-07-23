@@ -9,6 +9,7 @@
   var timeoutInput = adForm.querySelector('#timeout');
   var roomInput = adForm.querySelector('#room_number');
   var guestInput = adForm.querySelector('#capacity');
+  var resetButton = adForm.querySelector('.ad-form__reset');
   var successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
 
   var setMinPrice = function (minPrice) {
@@ -81,6 +82,11 @@
     window.form.addressInput.disabled = false;
     window.save(new FormData(adForm), successSaveHandler, window.util.errorHandler);
     evt.preventDefault();
+  });
+
+  resetButton.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    window.form.deactivatePage();
   });
 
   window.form = {
