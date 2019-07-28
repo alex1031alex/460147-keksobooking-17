@@ -8,7 +8,6 @@
     var escPressHandler = function (evt) {
       if (evt.keyCode === ESC_KEY_CODE) {
         element.remove();
-        console.log(element);
         document.removeEventListener('keydown', escPressHandler);
       }
     };
