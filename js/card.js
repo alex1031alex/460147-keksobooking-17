@@ -15,7 +15,7 @@
     'conditioner': 'Кондиционер'
   };
 
-  var renderCard = function (cardData) {
+  var render = function (cardData) {
     var card = cardTemplate.cloneNode(true);
 
     if (cardData.offer.title) {
@@ -95,10 +95,10 @@
       card.remove();
     });
 
-    document.addEventListener('keydown', window.util.escPressHandlerMaker(card));
+    document.addEventListener('keydown', window.util.createEscPressHandler(card));
   };
 
   window.card = {
-    renderCard: renderCard
+    render: render
   };
 })();

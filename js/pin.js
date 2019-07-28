@@ -24,12 +24,12 @@
   var successHandler = function (data) {
     window.util.switchFormControls(filterForm, false);
     var filteredNotices = filterNotices(data);
-    window.pin.renderPin(filteredNotices);
+    render(filteredNotices);
 
     var changePins = function () {
       window.setTimeout(function () {
         cleanMap();
-        renderPin(filterNotices(data));
+        render(filterNotices(data));
       }, DEBOUNCE_INTERVAL);
     };
 
@@ -148,7 +148,7 @@
     return filteredNotices;
   };
 
-  var renderPin = function (pinData) {
+  var render = function (pinData) {
     var fragment = document.createDocumentFragment();
     pinData.forEach(function (it, i) {
       var pin = mapPinTemplate.cloneNode(true);
@@ -165,7 +165,7 @@
         if (cardActive) {
           cardActive.remove();
         }
-        window.card.renderCard(pinData[i]);
+        window.card.render(pinData[i]);
       });
       fragment.appendChild(pin);
     });
@@ -177,6 +177,6 @@
     successHandler: successHandler,
     errorHandler: errorHandler,
     cleanMap: cleanMap,
-    renderPin: renderPin
+    render: render
   };
 })();
