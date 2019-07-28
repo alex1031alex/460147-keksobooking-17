@@ -64,7 +64,7 @@
       errorModal.remove();
       window.load(successHandler, errorHandler);
     });
-    document.addEventListener('keydown', window.util.escPressHandlerMaker(errorModal));
+    document.addEventListener('keydown', window.util.createEscPressHandler(errorModal));
   };
 
   var cleanMap = function () {

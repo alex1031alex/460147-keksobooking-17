@@ -27,15 +27,15 @@
   setMinPrice();
   window.util.switchFormControls(adForm, true);
 
-  homeTypeField.addEventListener('input', function () {
+  homeTypeField.addEventListener('change', function () {
     setMinPrice();
   });
 
-  timeinInput.addEventListener('input', function () {
+  timeinInput.addEventListener('change', function () {
     timeoutInput.value = timeinInput.value;
   });
 
-  timeoutInput.addEventListener('input', function () {
+  timeoutInput.addEventListener('change', function () {
     timeinInput.value = timeoutInput.value;
   });
 
@@ -55,11 +55,13 @@
 
   checkGuestNumber();
 
-  roomInput.addEventListener('input', function () {
+  roomInput.addEventListener('change', function () {
     checkGuestNumber();
+    console.log(guestInput.value);
   });
-  guestInput.addEventListener('input', function () {
+  guestInput.addEventListener('change', function () {
     checkGuestNumber();
+    console.log(guestInput.value);
   });
 
   var deactivatePage = function () {};
@@ -70,8 +72,9 @@
     successModal.addEventListener('click', function () {
       successModal.remove();
     });
-    document.addEventListener('keydown', window.util.escPressHandlerMaker(successModal));
+    console.log(successModal);
     window.form.deactivatePage();
+    document.addEventListener('keydown', window.util.createEscPressHandler(successModal));
   };
 
   var errorHandler = function (message) {
@@ -90,7 +93,7 @@
       errorModal.remove();
       window.save(new FormData(adForm), successHandler, errorHandler);
     });
-    document.addEventListener('keydown', window.util.escPressHandlerMaker(errorModal));
+    document.addEventListener('keydown', window.util.createEscPressHandler(errorModal));
   };
 
   adForm.addEventListener('submit', function (evt) {

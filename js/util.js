@@ -4,10 +4,11 @@
   var ESC_KEY_CODE = 27;
   var ENTER_KEY_CODE = 13;
 
-  var escPressHandlerMaker = function (element) {
+  var createEscPressHandler = function (element) {
     var escPressHandler = function (evt) {
       if (evt.keyCode === ESC_KEY_CODE) {
         element.remove();
+        console.log(element);
         document.removeEventListener('keydown', escPressHandler);
       }
     };
@@ -39,7 +40,7 @@
 
   window.util = {
     ENTER_KEY_CODE: ENTER_KEY_CODE,
-    escPressHandlerMaker: escPressHandlerMaker,
+    createEscPressHandler: createEscPressHandler,
     switchFormControls: switchFormControls
   };
 })();
