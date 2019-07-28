@@ -68,7 +68,7 @@
 
   var deactivatePage = function () {};
 
-  var successSaveHandler = function () {
+  var successHandler = function () {
     var successModal = successMessageTemplate.cloneNode(true);
     document.querySelector('main').appendChild(successModal);
     successModal.addEventListener('click', function () {
@@ -78,9 +78,28 @@
     window.form.deactivatePage();
   };
 
+  var errorHandler = function (message) {
+    var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+    var errorModal = errorTemplate.cloneNode(true);
+    var errorMessage = errorModal.querySelector('.error__message');
+    var errorButton = errorModal.querySelector('.error__button');
+    errorMessage.innerHTML += ('<br>' + message);
+    document.querySelector('main').appendChild(errorModal);
+    var closeModal = function () {
+      errorModal.remove();
+      document.removeEventListener('click', closeModal);
+    };
+    document.addEventListener('click', closeModal);
+    errorButton.addEventListener('click', function () {
+      errorModal.remove();
+      window.save(new FormData(adForm), successHandler, errorHandler);
+    });
+    document.addEventListener('keydown', window.util.escPressHandlerMaker(errorModal));
+  };
+
   adForm.addEventListener('submit', function (evt) {
     window.form.addressInput.disabled = false;
-    window.save(new FormData(adForm), successSaveHandler, window.util.errorHandler);
+    window.save(new FormData(adForm), successHandler, errorHandler);
     evt.preventDefault();
   });
 

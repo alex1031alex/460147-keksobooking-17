@@ -14,19 +14,6 @@
     return escPressHandler;
   };
 
-  var errorHandler = function (message) {
-    var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-    var errorModal = errorTemplate.cloneNode(true);
-    var errorMessage = errorModal.querySelector('.error__message');
-    var errorButton = errorModal.querySelector('.error__button');
-    errorMessage.innerHTML += ('<br>' + message);
-    document.querySelector('main').appendChild(errorModal);
-    errorButton.addEventListener('click', function () {
-      errorModal.remove();
-    });
-    document.addEventListener('keydown', escPressHandlerMaker(errorModal));
-  };
-
   var switchFormControls = function (form, isDisabled) {
     var inputs = form.querySelectorAll('input');
     var selects = form.querySelectorAll('select');

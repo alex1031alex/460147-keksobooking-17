@@ -21,7 +21,7 @@
 
   window.util.switchFormControls(filterForm, true);
 
-  var successLoadHandler = function (data) {
+  var successHandler = function (data) {
     window.util.switchFormControls(filterForm, false);
     var filteredNotices = filterNotices(data);
     window.pin.renderPin(filteredNotices);
@@ -46,6 +46,25 @@
         }
       });
     });
+  };
+
+  var errorHandler = function (message) {
+    var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+    var errorModal = errorTemplate.cloneNode(true);
+    var errorMessage = errorModal.querySelector('.error__message');
+    var errorButton = errorModal.querySelector('.error__button');
+    errorMessage.innerHTML += ('<br>' + message);
+    document.querySelector('main').appendChild(errorModal);
+    var closeModal = function () {
+      errorModal.remove();
+      document.removeEventListener('click', closeModal);
+    };
+    document.addEventListener('click', closeModal);
+    errorButton.addEventListener('click', function () {
+      errorModal.remove();
+      window.load(successHandler, errorHandler);
+    });
+    document.addEventListener('keydown', window.util.escPressHandlerMaker(errorModal));
   };
 
   var cleanMap = function () {
@@ -155,7 +174,8 @@
 
   window.pin = {
     filterForm: filterForm,
-    successLoadHandler: successLoadHandler,
+    successHandler: successHandler,
+    errorHandler: errorHandler,
     cleanMap: cleanMap,
     renderPin: renderPin
   };

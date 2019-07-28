@@ -90,7 +90,7 @@
 
       fillAddressInput();
       window.pin.cleanMap();
-      window.load(window.pin.successLoadHandler, window.util.errorHandler);
+      window.load(window.pin.successHandler, window.pin.errorHandler);
 
       document.removeEventListener('mousemove', mouseMoveHandler);
       document.removeEventListener('mouseup', mouseUpHandler);
