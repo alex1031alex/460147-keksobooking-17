@@ -17,8 +17,9 @@
   var errorHandler = function (message) {
     var errorTemplate = document.querySelector('#error').content.querySelector('.error');
     var errorModal = errorTemplate.cloneNode(true);
+    var errorMessage = errorModal.querySelector('.error__message');
     var errorButton = errorModal.querySelector('.error__button');
-    errorButton.textContent = message;
+    errorMessage.innerHTML += ('<br>' + message);
     document.querySelector('main').appendChild(errorModal);
     errorButton.addEventListener('click', function () {
       errorModal.remove();
