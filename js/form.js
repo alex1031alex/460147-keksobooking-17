@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+  var MAX_ROOM_QUANTITY = 100;
   var adForm = document.querySelector('.ad-form');
   var addressInput = adForm.querySelector('#address');
   var homeTypeField = adForm.querySelector('#type');
@@ -40,14 +41,14 @@
   });
 
   var checkGuestNumber = function () {
-    if (Number(roomInput.value) === 100 && Number(guestInput.value) !== 0) {
+    if (Number(roomInput.value) === MAX_ROOM_QUANTITY && Number(guestInput.value) !== 0) {
       guestInput.setCustomValidity('Если количество комнат равно 100 выберите вариант Не для гостей');
     } else if (Number(roomInput.value) < Number(guestInput.value)) {
       guestInput.setCustomValidity('Количество комнат не должно превышать количество гостей.' +
         'Выберите другой вариант');
-    } else if (Number(roomInput.value) < 100 && Number(guestInput.value) === 0) {
+    } else if (Number(roomInput.value) < MAX_ROOM_QUANTITY && Number(guestInput.value) === 0) {
       guestInput.setCustomValidity('Если Вы хотите указать количество мест "Не для гостей",' +
-        ' выберите вариант 100 комнат в поле "Кол-во комнат". В противном случае укажите количество гостей.');
+        ' выберите вариант "100 комнат"" в поле "Кол-во комнат". В противном случае укажите количество гостей.');
     } else {
       guestInput.setCustomValidity('');
     }
