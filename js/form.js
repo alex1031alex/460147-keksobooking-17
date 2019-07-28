@@ -58,11 +58,9 @@
 
   roomInput.addEventListener('change', function () {
     checkGuestNumber();
-    console.log(guestInput.value);
   });
   guestInput.addEventListener('change', function () {
     checkGuestNumber();
-    console.log(guestInput.value);
   });
 
   var deactivatePage = function () {};
@@ -73,7 +71,6 @@
     successModal.addEventListener('click', function () {
       successModal.remove();
     });
-    console.log(successModal);
     window.form.deactivatePage();
     document.addEventListener('keydown', window.util.createEscPressHandler(successModal));
   };
