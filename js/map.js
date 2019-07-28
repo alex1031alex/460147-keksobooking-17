@@ -89,6 +89,7 @@
       }
 
       fillAddressInput();
+      window.pin.cleanMap();
       window.load(window.pin.successLoadHandler, window.util.errorHandler);
 
       document.removeEventListener('mousemove', mouseMoveHandler);

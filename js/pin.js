@@ -50,9 +50,11 @@
 
   var cleanMap = function () {
     var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    pins.forEach(function (it) {
-      it.remove();
-    });
+    if (pins) {
+      pins.forEach(function (it) {
+        it.remove();
+      });
+    }
     var activeCard = document.querySelector('.map .map__card');
     if (activeCard) {
       activeCard.remove();
