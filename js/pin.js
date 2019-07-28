@@ -5,6 +5,8 @@
     WIDTH: 50,
     HEIGHT: 70
   };
+  var MIN_MIDDLE_PRICE = 10000;
+  var MIN_HIGH_PRICE = 50000;
   var DEBOUNCE_INTERVAL = 500;
   var MAX_PIN_QUANTITY = 5;
   var mapPinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
@@ -94,11 +96,11 @@
       if (priceFilter.value === 'any') {
         return true;
       } else if (priceFilter.value === 'middle') {
-        return it.offer.price >= 10000 && it.offer.price < 50000;
+        return it.offer.price >= MIN_MIDDLE_PRICE && it.offer.price < MIN_HIGH_PRICE;
       } else if (priceFilter.value === 'low') {
-        return it.offer.price < 10000;
+        return it.offer.price < MIN_MIDDLE_PRICE;
       } else {
-        return it.offer.price >= 50000;
+        return it.offer.price >= MIN_HIGH_PRICE;
       }
     };
     // Фильтрация по числу комнат

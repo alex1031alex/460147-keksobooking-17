@@ -11,6 +11,7 @@
       NOT_FOUND: 404,
       SERVER_ERROR: 500
     };
+    var TIMEOUT = 10000;
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
@@ -45,10 +46,10 @@
     });
 
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      onError('Запрос не успел выполниться за ' + TIMEOUT + 'мс');
     });
 
-    xhr.timeout = 10000;
+    xhr.timeout = TIMEOUT;
 
     xhr.open('GET', URL);
     xhr.send();
