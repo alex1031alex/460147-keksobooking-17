@@ -106,7 +106,7 @@
         activatePage();
       }
       fillAddressInput();
-      window.load(window.pin.successLoadHandler, window.util.errorHandler);
+      window.load(window.pin.successHandler, window.pin.errorHandler);
     }
   });
 })();

@@ -11,28 +11,24 @@
   var guestInput = adForm.querySelector('#capacity');
   var resetButton = adForm.querySelector('.ad-form__reset');
   var successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
-
-  var setMinPrice = function (minPrice) {
-    priceInput.min = String(minPrice);
-    priceInput.placeholder = String(minPrice);
+  var Price = {
+    BUNGALO: 0,
+    FLAT: 1000,
+    HOUSE: 5000,
+    PALACE: 10000
   };
 
+  var setMinPrice = function () {
+    var homeType = homeTypeField.value.toUpperCase();
+    priceInput.min = Price[homeType];
+    priceInput.placeholder = Price[homeType];
+  };
+
+  setMinPrice();
   window.util.switchFormControls(adForm, true);
 
   homeTypeField.addEventListener('input', function () {
-    switch (homeTypeField.value) {
-      case 'bungalo':
-        setMinPrice(0);
-        break;
-      case 'flat':
-        setMinPrice(1000);
-        break;
-      case 'house':
-        setMinPrice(5000);
-        break;
-      case 'palace':
-        setMinPrice(10000);
-    }
+    setMinPrice();
   });
 
   timeinInput.addEventListener('input', function () {

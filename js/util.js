@@ -40,7 +40,6 @@
   window.util = {
     ENTER_KEY_CODE: ENTER_KEY_CODE,
     escPressHandlerMaker: escPressHandlerMaker,
-    errorHandler: errorHandler,
     switchFormControls: switchFormControls
   };
 })();
